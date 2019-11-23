@@ -1,0 +1,25 @@
+{% macro displayPitches(pitch_list) %}
+    <div class="card">
+        <div class="card-body">
+            <img class="card-logo" src="{{}}" alt="">
+        </div>
+        <div class="card-footer">
+                
+            <div class="container">
+                <div class="row">
+                    <p>{{}}</p>
+                </div>
+                <div class="row icons">
+            
+                    <div class="comments">
+                        <button class="btn btn-outline-secondary"><i class="far fa-comment"></i> Comment</button>
+                    </div>
+                    <div class="likes pull-right">
+                        <button class="btn btn-outline-secondary"><i class="fas fa-thumbs-up"></i> Like</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{%endmacro%}

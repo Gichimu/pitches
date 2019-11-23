@@ -1,11 +1,20 @@
 {%extends 'bootstrap/base.html'%}
 {%block styles%}
     {{super()}}
+    <script src="https://kit.fontawesome.com/ef9216c536.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 {%endblock%}
  
 {%block navbar%}
-    {% include 'navbar.html'%}
+<div class="container">
+    <nav class="navbar navbar-light ">
+        <a class="navbar-brand" href="#">
+            <img src="http://www.eatlogos.com/alphabet_logos/png/vector_circle_p_logo.png" width="30" height="30" class="d-inline-block align-top logo" alt="">
+            Pitches
+        </a>
+    </nav>
+</div>
 {%endblock%}
 {%block content%}
+
 {%endblock%}
