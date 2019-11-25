@@ -25,6 +25,8 @@ body {
     max-height: 300px;
 }
 
+
+
 .card{
     margin: 0.5%;
     border: 1px solid lightgray;
@@ -48,3 +50,10 @@ body {
     width:100%;
     text-align:center;
   }
+
+  /* login form */
+
+.login {
+    margin-top: 20%;
+    color: white;
+}

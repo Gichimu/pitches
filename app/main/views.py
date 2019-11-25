@@ -1,5 +1,6 @@
 from . import main
 from flask import render_template
+from ..auth.forms import LoginForm
 
 @main.route('/')
 def home():
@@ -8,3 +9,6 @@ def home():
     '''
 
     return render_template('index.html')
+
+
+

@@ -8,10 +8,11 @@
 {%block navbar%}
 <div class="container">
     <nav class="navbar navbar-light ">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <img src="http://www.eatlogos.com/alphabet_logos/png/vector_circle_p_logo.png" width="30" height="30" class="d-inline-block align-top logo" alt="">
             Pitches
         </a>
+        <a href="{{url_for('auth.login')}}"><button class="btn btn-outline-primary" type="button">Login</button></a>
     </nav>
 </div>
 {%endblock%}
