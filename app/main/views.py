@@ -33,14 +33,20 @@ def profile(uname):
 @main.route('/profile/<uname>/create', methods=['GET','POST'])
 def create_pitch(uname):
 
-    # user = User.query.filter_by(username = uname).first()
-    form = pitchForm()
-    
-    
-    Pitch.pitch_body = form.body.data
-    db.session.commit()
 
-    return redirect(url_for('main.profile', uname=uname))
+    form = pitchForm()
+    if form.validate_on_submit:
+        Pitch.pitch_pic_loc = form.photo.data
+        Pitch.pitch_body = form.body.data
+        db.session.add(Pitch)
+        db.session.commit()
+
+        return redirect(url_for('main.profile', uname=uname))
+    
+    
+    
+
+    return render_template('pitch/pitch.html', form=form)
 
     
 
