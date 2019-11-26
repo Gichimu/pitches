@@ -4,6 +4,7 @@ from ..auth.forms import LoginForm
 from flask_login import current_user
 from ..models import User, Comment, Pitch
 from .forms import pitchForm
+from .. import db
 
 @main.route('/')
 def home():
