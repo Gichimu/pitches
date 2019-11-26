@@ -15,31 +15,8 @@
                 
                 <hr>
                 <div class="text-center">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#pitch-modal">Create Pitch</button>
+                    <a href="{{url_for('main.create_pitch', uname=current_user.username)}}"><button class="btn btn-primary" data-toggle="modal" id="pitch">Create Pitch</button></a>
                 </div>
-                <!-- Modal -->
-     <div class="modal fade" id="pitch-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">1 Minute pitch</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{url_for('main.create_pitch', uname=current_user.username)}}" method="post" enctype="multipart/form-data">
-                    <input type="file" name="photo" class="form-control" required>
-                    <textarea name="body" id="" cols="50" rows="5" placeholder="Your text goes here ..." required></textarea>
-                </form>
-              
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
                 
             </div>
             <div class="col-md-8 prof-right">
@@ -53,5 +30,16 @@
         </div>
     </div>
     
-
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#pitch").click(function() {
+                $("#pitch-form").show();
+            });
+            $("#pitch").click(function() {
+                $("#pitch-form").hide();
+            });
+        });
+    </script>
 {%endblock%}
+
+    

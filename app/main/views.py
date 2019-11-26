@@ -3,6 +3,7 @@ from flask import render_template, request, abort, redirect, url_for
 from ..auth.forms import LoginForm
 from flask_login import current_user
 from ..models import User, Comment, Pitch
+from .forms import pitchForm
 
 @main.route('/')
 def home():
@@ -28,15 +29,13 @@ def profile(uname):
         return render_template('profile/profile.html')
 
 
-@main.route('/create_pitch/<uname>', methods=['POST'])
+@main.route('/profile/<uname>/create', methods=['GET','POST'])
 def create_pitch(uname):
 
     # user = User.query.filter_by(username = uname).first()
-
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        Pitch.pitch_pic_loc = path
+    form = pitchForm()
+    
+    
     Pitch.pitch_body = form.body.data
     db.session.commit()
 
