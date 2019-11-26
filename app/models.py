@@ -2,6 +2,7 @@ from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -11,9 +12,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(UserMixin, db.Model):
-    '''
-    Class that outlines the behaviour and attributes of the user
-    '''
+   
     __tablename__= 'users'
     id = db.Column(db.Integer, primary_key= True)
     username = db.Column(db.String(255))
@@ -37,19 +36,16 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-association_table = Table('association', Base.metadata,
-    Column('id', Integer, ForeignKey('pitches.id')),
-    Column('pitch_id', Integer, ForeignKey('comments.pitch_id'))
-)
+
 
 class Comment(db.Model):
-    '''
-    Class that outlines the attributes of the comment class
-    '''
+    
+    
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(255))
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+
 
     def __repr__(self):
         return f'Comment {self.body}'
@@ -63,7 +59,7 @@ class Pitch(db.Model):
     pitch_pic_loc = db.Column(db.String(255))
     pitch_body = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comment = db.relationship('Comment', backref='pitch', lazy="dynamic")
+    comments = db.relationship('Comment', backref = 'pitch', lazy="dynamic")
 
     def save_pitch(self):
         db.session.add(self)
