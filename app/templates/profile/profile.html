@@ -1,0 +1,57 @@
+{%extends 'base.html'%}
+{%import 'macros.html' as macro%}
+
+{%block content%}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 prof-left">
+                <div class="text-center">
+                <img src="http://www.ledco.co.ke/wp-content/uploads/2014/02/Avatar-1.png" class="prof-pic" alt="">
+                </div>
+                <hr>
+                <div class="text-center">
+                    <b>{{current_user.username}}</b>
+                </div>
+                
+                <hr>
+                <div class="text-center">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#pitch-modal">Create Pitch</button>
+                </div>
+                <!-- Modal -->
+     <div class="modal fade" id="pitch-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">1 Minute pitch</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{url_for('main.create_pitch', uname=current_user.username)}}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="photo" class="form-control" required>
+                    <textarea name="body" id="" cols="50" rows="5" placeholder="Your text goes here ..." required></textarea>
+                </form>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+                
+            </div>
+            <div class="col-md-8 prof-right">
+                {%if pitches%}
+                {{ macro.displayPitches(pitches)}}
+                {%else%}
+                <p>No Pitches to display!</p>
+                {%endif%}
+            </div>
+
+        </div>
+    </div>
+    
+
+{%endblock%}

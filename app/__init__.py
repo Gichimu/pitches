@@ -26,9 +26,6 @@ def create_app(config_name):
     mail.init_app(app)
     login_manager.init_app(app)
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return None
 
     #initializing the blueprint
     from .main import main as main_blueprint

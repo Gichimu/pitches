@@ -1,13 +1,14 @@
 {% macro displayPitches(pitch_list) %}
+    {%for item in pitch_list%}
     <div class="card">
         <div class="card-body">
-            <img class="card-logo" src="{{}}" alt="">
+            <img class="card-logo" src="{{item.pitch_pic_loc}}" alt="">
         </div>
         <div class="card-footer">
                 
             <div class="container">
                 <div class="row">
-                    <p>{{}}</p>
+                    <p>{{item.pitch_body}}</p>
                 </div>
                 <div class="row icons">
             
@@ -22,4 +23,5 @@
             
         </div>
     </div>
+    {%endfor%}
 {%endmacro%}
