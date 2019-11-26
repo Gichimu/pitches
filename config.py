@@ -1,5 +1,7 @@
 import os
 
+import psycopg2
+
 class Config:
     '''
     class that defines all the basic configurations of the application
@@ -20,7 +22,7 @@ class Config:
 class ProdConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 
 class DevConfig(Config):
