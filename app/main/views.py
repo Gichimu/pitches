@@ -1,7 +1,8 @@
 from . import main
+from werkzeug.utils import secure_filename
 from flask import render_template, request, abort, redirect, url_for
 from ..auth.forms import LoginForm
-from flask_login import current_user
+from flask_login import current_user, login_required
 from ..models import User, Comment, Pitch
 from .forms import pitchForm
 from .. import db
@@ -31,21 +32,24 @@ def profile(uname):
 
 
 @main.route('/profile/<uname>/create', methods=['GET','POST'])
+@login_required
 def create_pitch(uname):
-
+    user = User.query.filter_by(username=uname).first()
 
     form = pitchForm()
-    if form.validate_on_submit:
-        Pitch.pitch_pic_loc = form.photo.data
-        Pitch.pitch_body = form.body.data
-        db.session.add(Pitch)
+    pitch = Pitch()
+    if form.validate_on_submit():
+        f = form.photo.data
+        filename = secure_filename(f.filename)
+        path = f'photos/{filename}'
+        pitch.pitch_pic_loc = path
+        pitch.user_id = user.id
+        pitch.pitch_body = form.body.data
+        db.session.add(pitch)
         db.session.commit()
 
-        return redirect(url_for('main.profile', uname=uname))
+        return redirect(url_for('.profile', uname=uname))
     
-    
-    
-
     return render_template('pitch/pitch.html', form=form)
 
     
