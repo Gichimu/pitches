@@ -85,7 +85,7 @@ class Pitch(db.Model):
 
     def remove_pitch(self):
         pitch = Pitch.query.filter_by(id = self.id).first()
-        db.session.remove(pitch)
+        db.session.delete(pitch)
 
     def __repr__(self):
         return f'Pitch {self.body}'
