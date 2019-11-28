@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255), unique = True, index = True)
     profile_pic_path = db.Column(db.String())
     pitches = db.relationship('Pitch', backref = 'users', lazy="dynamic")
+    comments = db.relationship('Comment', backref = 'users', lazy="dynamic")
     pass_secure = db.Column(db.String(255))
 
     @property
@@ -28,7 +29,6 @@ class User(UserMixin, db.Model):
     @password.setter
     def password(self, password):
         self.pass_secure = generate_password_hash(password)
-
 
     def verify_password(self, password):
         return check_password_hash(self.pass_secure, password)
@@ -45,7 +45,20 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(255))
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    def create_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls, pitch_id):
+        comments = Comment.query.filter_by(pitch_id = pitch_id).all()
+        return comments
+
+    def remove_comment(self):
+        comment = Comment.query.filter_by(id = self.id).first()
+        db.session.remove(comment)
 
     def __repr__(self):
         return f'Comment {self.body}'
@@ -54,7 +67,7 @@ class Comment(db.Model):
 class Pitch(db.Model):
 
     __tablename__ = 'pitches'
-
+    
     id = db.Column(db.Integer, primary_key=True)
     pitch_pic_loc = db.Column(db.String(255))
     pitch_body = db.Column(db.String(255))
@@ -67,7 +80,7 @@ class Pitch(db.Model):
 
     @classmethod
     def get_pitches(cls, user_id):
-        pitches = Pitch.query.filter_by(user_id = cls.user_id).all()
+        pitches = Pitch.query.filter_by(user_id = user_id).all()
         return pitches
 
     def remove_pitch(self):
